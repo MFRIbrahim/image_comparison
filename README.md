@@ -7,7 +7,7 @@ A multithreaded tool for comparing a ton of images in multiple directories to de
 
 # Usage
 
-The best way to use this is to build it with cargo. Simply [install Rust](https://www.rust-lang.org/tools/install) and run ```cargo build --release``` within the image_comparison folder. To run the tool simply use 
+To use this tool build it with cargo. Simply [install Rust](https://www.rust-lang.org/tools/install), clone the repository and run ```cargo build --release``` within the repository folder. To run the tool simply use 
 ```
 ./target/release/image_comparison <path>...
 ```  
