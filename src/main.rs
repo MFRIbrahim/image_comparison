@@ -1,9 +1,9 @@
 use clap::{App, Arg};
 use dashmap::DashMap;
+use lazy_static::lazy_static;
 use std::path::PathBuf;
 use std::process;
 use std::sync::Arc;
-use lazy_static::lazy_static;
 
 lazy_static! {
     static ref THREAD_NUMBER: usize = num_cpus::get() - 1;
@@ -43,7 +43,7 @@ with a space."
         for chunk in (&path_list[..]).chunks(path_list.len() / *THREAD_NUMBER) {
             let shared_hash_map = Arc::clone(&shared_hash_map);
             scope.execute(move || image_comparison::fill_hash_map(chunk, shared_hash_map));
-        } 
+        }
     });
     (shared_hash_map).retain(|_, v| v.len() > 1);
 
@@ -53,5 +53,8 @@ with a space."
     });
 
     let len = shared_hash_map.len();
-    println!("{} groups of duplicates or very similar images were found.", len);
+    println!(
+        "{} groups of duplicates or very similar images were found.",
+        len
+    );
 }

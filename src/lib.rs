@@ -1,10 +1,10 @@
+use clap::OsValues;
 use dashmap::DashMap;
 use img_hash::HasherConfig;
 use serde::ser::Serialize;
 use std::fs;
 use std::path::PathBuf;
 use std::sync::Arc;
-use clap::OsValues;
 
 pub fn write_to_json<T: ?Sized + Serialize>(obj: &T) -> Result<(), anyhow::Error> {
     let content = serde_json::to_string_pretty(obj)?;
@@ -15,7 +15,7 @@ pub fn write_to_json<T: ?Sized + Serialize>(obj: &T) -> Result<(), anyhow::Error
 
 pub fn create_path_list(img_dir_paths: OsValues) -> Result<Vec<PathBuf>, anyhow::Error> {
     let mut path_list: Vec<PathBuf> = Vec::new();
-    
+
     for img_dir_path in img_dir_paths {
         let mut dir_stack = vec![fs::canonicalize(img_dir_path).unwrap()];
         loop {
