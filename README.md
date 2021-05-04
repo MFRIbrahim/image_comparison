@@ -1,6 +1,6 @@
 # image_comparison
 
-A multithreaded tool for comparing a ton of images in multiple directories to detect duplicates or very similar images. The tool uses the dHash perceptual hash algorithm implemented in the [img_hash](https://github.com/abonander/img_hash) crate to compute image hashes and compare image similarity. The result is a "hash_map.json" file that has the following structure:  
+A multithreaded CLI tool for comparing a ton of images in multiple directories to detect duplicates or very similar images. The tool uses the dHash perceptual hash algorithm implemented in the [img_hash](https://github.com/abonander/img_hash) crate to compute image hashes and compare image similarity. The result is a "hash_map.json" file that has the following structure:  
 - key: image hash
 - value: list of absolute paths to the images that hash to the same image hash value
 
