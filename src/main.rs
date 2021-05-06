@@ -5,6 +5,8 @@ use std::path::PathBuf;
 use std::process;
 use std::sync::Arc;
 
+mod lib;
+
 lazy_static! {
     static ref THREAD_NUMBER: usize = num_cpus::get() - 1;
 }
@@ -32,7 +34,7 @@ with a space."
         .get_matches();
 
     let img_dir_path = matches.values_of_os("path").unwrap();
-    let path_list = image_comparison::create_path_list(img_dir_path).unwrap_or_else(|err| {
+    let path_list = lib::create_path_list(img_dir_path).unwrap_or_else(|err| {
         eprintln!("Problem parsing the directory files: {}", err);
         process::exit(1);
     });
@@ -42,12 +44,12 @@ with a space."
     pool.scoped(|scope| {
         for chunk in (&path_list[..]).chunks(path_list.len() / *THREAD_NUMBER) {
             let shared_hash_map = Arc::clone(&shared_hash_map);
-            scope.execute(move || image_comparison::fill_hash_map(chunk, shared_hash_map));
+            scope.execute(move || lib::fill_hash_map(chunk, shared_hash_map));
         }
     });
     (shared_hash_map).retain(|_, v| v.len() > 1);
 
-    image_comparison::write_to_json(&*shared_hash_map).unwrap_or_else(|err| {
+    lib::write_to_json(&*shared_hash_map).unwrap_or_else(|err| {
         eprintln!("Problem saving results to a json file: {}", err);
         process::exit(1);
     });
