@@ -5,9 +5,9 @@ use std::path::PathBuf;
 use std::process;
 use std::sync::Arc;
 
-use lib::*;
+use utils::*;
 
-mod lib;
+mod utils;
 
 lazy_static! {
     static ref THREAD_NUMBER: usize = num_cpus::get() - 1;
